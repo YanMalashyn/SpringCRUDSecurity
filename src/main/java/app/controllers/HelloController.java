@@ -13,15 +13,6 @@ public class HelloController {
         System.out.println("GOOOOOOODDDDD");
         return "good";
     }
-    @PostConstruct
-    public void adsd(){
-        System.out.println("dasfsd");
-    }
 
-    @GetMapping(value = "/privet")
-    @ResponseBody
-    public String privet(){
-        return "good";
-    }
 
 }
