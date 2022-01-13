@@ -1,6 +1,6 @@
 import app.config.AppConfig;
 import app.model.User;
-import app.servicу.UserService;
+import app.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package app.servicу;
+package app.service;
 
 import app.dao.UserDao;
 import app.model.User;
