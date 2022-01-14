@@ -17,14 +17,14 @@ public class User {
     private String lastName;
 
     @Column(name = "email")
-    private String email;
+    private String age;
 
     public User() {}
 
-    public User( String firstName, String lastName, String email) {
+    public User( String firstName, String lastName, String age) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.age = age;
     }
 
     public Long getId() {
@@ -51,12 +51,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAge() {
+        return age;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAge(String email) {
+        this.age = email;
     }
 
 }
