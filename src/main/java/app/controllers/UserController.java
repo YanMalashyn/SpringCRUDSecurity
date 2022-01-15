@@ -1,13 +1,16 @@
 package app.controllers;
 
+import app.model.User;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -20,10 +23,43 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String getId(@PathVariable("id") int id, Model model){
+    public String getUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "show";
+        return "userInfo";
     }
+
+    @GetMapping("/add")
+    public String addUser(@ModelAttribute("newUser") User newUser) {
+        return "newUser";
+    }
+
+    @PostMapping("/add")
+    public String addNewUser(@ModelAttribute("newUser") User newUser) {
+        if(Objects.nonNull(newUser) && newUser.getAge() != 0 && newUser.getFirstName() != null && newUser.getLastName() != null) {
+            userService.saveUser(newUser);
+        }
+        return "redirect:/user";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteUser(@PathVariable("id") int id) {
+        userService.deleteUser(id);
+        return "redirect:/user";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editUser(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        System.out.println("ok");
+        return "editUser";
+    }
+
+    @PatchMapping("/{id}")
+    public String editUser(@PathVariable("id") int id, @ModelAttribute("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/user/"+id;
+    }
+
 
 
 

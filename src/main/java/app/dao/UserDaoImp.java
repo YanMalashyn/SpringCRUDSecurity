@@ -1,44 +1,42 @@
 package app.dao;
 
 import app.model.User;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void saveUser(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.persist(user);
+
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getListUsers() {
-        return sessionFactory.getCurrentSession().createQuery("from User").getResultList();
+        return entityManager.createQuery("from User").getResultList();
     }
 
     @Override
     public User getUserById(int id) {
-        Query query = sessionFactory.getCurrentSession().createQuery("from User u where u.id =: id");
-        query.setParameter("id", id);
-        return (User) query.getSingleResult();
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public void updateUser(User user) {
-        //!!!!!!!!!!!!!!
+       entityManager.merge(user);
     }
 
     @Override
     public void deleteUser(int id) {
-        //!!!!!!!!!!!!!!
+        entityManager.remove(entityManager.find(User.class, id));
     }
 }
