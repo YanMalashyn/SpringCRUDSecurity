@@ -8,9 +8,9 @@
 <body>
 <h2>Info about user:</h2><br>
 <div>Name: <span th:text="${user.firstName}" /></div>
-<div>LastName: <span th:text="${user.lastName}" /></div>
+<div>Lastname: <span th:text="${user.lastName}" /></div>
 <div>Age: <span th:text="${user.age}" /></div>
-<a th:href="@{/user/{id}/edit(id=${user.getId()})}">Edit User</a><br>
-<a th:href="@{/user/{id}/delete(id=${user.getId()})}">Delete User</a>
+<a th:href="@{/user/{id}/edit(id=${user.getId()})}">Edit</a><br>
+<a th:href="@{/user/{id}/delete(id=${user.getId()})}">Delete</a>
 </body>
 </html>

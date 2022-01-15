@@ -20,7 +20,7 @@ public class UserServiceImp implements UserService {
         userDao.saveUser(user);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public List<User> getListUsers() {
         return userDao.getListUsers();
