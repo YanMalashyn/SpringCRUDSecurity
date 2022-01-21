@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All User</title>
+</head>
+<body>
+<h1>Table of User's</h1>
+<br/>
+<table border="1">
+    <tr>
+        <th>username</th>
+        <th>password</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Age</th>
+        <th>roles</th>
+        <th>Manage</th>
+    </tr>
+
+    <tr th:each="user:${userList}">
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.getAllRoles()}"></td>
+        <td><a th:href="@{/admin/user/{id}(id=${user.getId()})}">Go to</a></td>
+
+    </tr>
+</table>
+<div><a href="/admin/user/add">Add User</a></div>
+</body>
+</html>

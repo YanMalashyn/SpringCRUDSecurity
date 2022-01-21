@@ -5,14 +5,14 @@ import app.model.User;
 import java.util.List;
 
 public interface UserService {
-    void saveUser(User user);
+    void saveUser(User user, Long id);
 
     List<User> getListUsers();
 
-    User getUserById(int id);
+    User getUserById(Long id);
 
-    void updateUser(User user);
+    void updateUser(Long id, User user);
 
-    void deleteUser(int id);
+    void deleteUser(Long id);
 }
 

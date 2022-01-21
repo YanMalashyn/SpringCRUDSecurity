@@ -1,14 +1,21 @@
 package app.model;
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Data
+@EqualsAndHashCode
+@AllArgsConstructor
+@ToString
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column
     private String firstName;
@@ -19,19 +26,28 @@ public class User {
     @Column
     private int age;
 
-    public User() {}
+    @Column
+    private String username;
 
-    public User( String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
+    @Column
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public User(){
     }
 
-    public int getId() {
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,4 +75,35 @@ public class User {
         this.age = age;
     }
 
+    public String getAllRoles(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Role role:roles){
+            stringBuilder.append(role.toString());
+        }
+        return stringBuilder.toString();
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
