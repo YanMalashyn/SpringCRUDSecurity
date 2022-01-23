@@ -1,6 +1,5 @@
 package app.controllers;
 
-import app.model.Role;
 import app.model.User;
 import app.service.RoleService;
 import app.service.UserService;
@@ -9,16 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    private RoleService roleService;
+    public AdminController(UserService userService, RoleService roleService){
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @GetMapping()
     public String index (Model model){
