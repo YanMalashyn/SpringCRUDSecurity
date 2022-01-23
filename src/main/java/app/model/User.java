@@ -1,18 +1,15 @@
 package app.model;
 
-import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
-@EqualsAndHashCode
-@AllArgsConstructor
-@ToString
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -20,18 +17,22 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "field must be required")
     @Column
     private String firstName;
 
+    @NotBlank (message = "field must be required")
     @Column
     private String lastName;
 
     @Column
     private int age;
 
+    @NotBlank (message = "field must be required")
     @Column
     private String username;
 
+    @NotBlank (message = "field must be required")
     @Column
     private String password;
 
@@ -40,11 +41,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-    public User(){
-    }
-
-
 
     public Long getId() {
         return id;
@@ -138,5 +134,16 @@ public class User implements UserDetails {
         return roles;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

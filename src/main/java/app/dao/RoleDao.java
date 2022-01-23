@@ -1,7 +1,6 @@
 package app.dao;
 
 import app.model.Role;
-import app.model.User;
 
 import java.util.List;
 

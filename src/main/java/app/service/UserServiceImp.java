@@ -53,6 +53,7 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void updateUser(Long id, User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.updateUser(id, user);
     }
 
@@ -63,7 +64,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User getUserByName(String name){
-       return userDao.getUserByName(name);
+    public User getUserByName(String name) {
+        return userDao.getUserByName(name);
     }
 }

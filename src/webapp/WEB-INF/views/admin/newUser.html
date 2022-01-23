@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add new user</title>
 </head>
 <body>
 <form th:method="POST" th:action="@{/admin/user/add}" th:object="${newUser}">
-    <label for="name">username: </label>
-    <input type="text" th:field="*{username}" id="username"/><br>
-    <label for="password">password: </label>
-    <input type="text" th:field="*{password}" id="password"/><br>
-    <label for="name">Name: </label>
-    <input type="text" th:field="*{firstName}" id="name"/><br>
-    <label for="surname">LastName: </label>
-    <input type="text" th:field="*{lastName}" id="surname"/><br>
-    <label for="age">Age: </label>
-    <input type="text" th:field="*{age}" id="age"/><br>
+    <label for="username">username: </label>
+    <input type="text" th:field="*{username}" id="username" required/><br>
 
+    <label for="password">password: </label>
+    <input type="text" th:field="*{password}" id="password" required/><br>
+
+    <label for="name">Name: </label>
+    <input type="text" th:field="*{firstName}" id="name" required/><br>
+
+    <label for="surname">LastName: </label>
+    <input type="text" th:field="*{lastName}" id="surname" required/><br>
+
+    <label for="age">Age: </label>
+    <input type="text" th:field="*{age}" id="age" required/><br>
 
     <label>
         <select th:multiple th:size="2" th:name="rolesIdSelect" th:required="true">
@@ -30,12 +32,14 @@
             </option>
         </select>
     </label>
+
     <br><br>
     <input type="submit" value="Create"/>
 </form>
 
-<br><br>
-<a th:href="@{/logout}">Logout</a>
+<form method="GET" action="/logout">
+    <input type="submit" value="Logout">
+</form>
 
 </body>
 </html>

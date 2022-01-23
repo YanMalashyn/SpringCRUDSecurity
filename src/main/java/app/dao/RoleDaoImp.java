@@ -1,7 +1,6 @@
 package app.dao;
 
 import app.model.Role;
-import app.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,7 +9,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class RoleDaoImp implements RoleDao{
+public class RoleDaoImp implements RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
