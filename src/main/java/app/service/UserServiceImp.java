@@ -4,6 +4,7 @@ import app.dao.UserDao;
 import app.model.Role;
 import app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,20 +18,24 @@ public class UserServiceImp implements UserService {
 
     private final UserDao userDao;
     private final RoleService roleService;
-    @Autowired
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImp(UserDao userDao, RoleService roleService) {
+    @Autowired
+    public UserServiceImp(UserDao userDao, RoleService roleService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDao = userDao;
         this.roleService = roleService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional
     @Override
     public void saveUser(User user, Long id) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(roleService.getRoleById(id));
         user.setRoles(roleSet);
         userDao.saveUser(user);
+
     }
 
     @Transactional

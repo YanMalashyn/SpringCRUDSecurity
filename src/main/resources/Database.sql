@@ -35,7 +35,7 @@ CREATE TABLE learning.users_roles
 );
 
 INSERT learning.users
-VALUES (null, 'Admin', 'Admins', 35, 'ADMIN', 'ADMIN'),
+VALUES (null, 'Admin', 'Admins', 35, 'ADMIN', '$2a$10$DK2Yd6NWHU9cGcJqOjbpBuV1RSF51HfEncxiD7XXLNTVYfPiR/KMi'),
        (null, 'Sasha', 'Sidorov', 23, '1', '1'),
        (null, 'Sveta', 'Petrov', 33, '2', '2'),
        (null, 'Ivan', 'Oveec', 24, '3', '3'),
