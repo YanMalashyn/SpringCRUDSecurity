@@ -15,6 +15,12 @@ public class LoginController {
         return "redirect:/login";
     }
 
+    @GetMapping("/login")
+    public String start2() {
+        return "redirect:/login";
+    }
+
+
 
 
 }
