@@ -18,6 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -25,13 +26,18 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan(value = "app")
 public class AppConfig {
+
+    private final Environment env;
+
     @Autowired
-    private Environment env;
+    public AppConfig(Environment env){
+        this.env = env;
+    }
 
     @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("db.driver"));
+        dataSource.setDriverClassName(Objects.requireNonNull(env.getProperty("db.driver")));
         dataSource.setUrl(env.getProperty("db.url"));
         dataSource.setUsername(env.getProperty("db.username"));
         dataSource.setPassword(env.getProperty("db.password"));
@@ -43,15 +49,15 @@ public class AppConfig {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(getDataSource());
-        em.setPackagesToScan(new String[] { "app.model" });
+        em.setPackagesToScan("app.model");
 
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-        properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        Properties props = new Properties();
+        props.put("hibernate.show_sql", true);
+        props.put("hibernate.hbm2ddl.auto", "update");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(properties);
+        em.setJpaProperties(props);
 
         return em;
     }
