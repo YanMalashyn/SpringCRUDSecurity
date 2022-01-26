@@ -4,9 +4,12 @@ import app.model.User;
 import app.service.RoleService;
 import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -33,6 +36,7 @@ public class AdminController {
     @GetMapping("/user/{id}")
     public String getUser(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("roleUser", userService.getListUsers());
         return "admin/userInfo";
     }
 
@@ -46,7 +50,7 @@ public class AdminController {
 
     //POST /admin/ - сохранение данных ввода и редирект на таблицу пользователей
     @PostMapping("/user/add")
-    public String addNewUser(@ModelAttribute("newUser") User newUser,
+    public String addNewUser(@ModelAttribute("newUser") @Valid User newUser,
                              @RequestParam(value = "rolesIdSelect") Long idRole) {
         userService.saveUser(newUser, idRole);
         return "redirect:/admin/";
@@ -63,13 +67,15 @@ public class AdminController {
     @GetMapping("/user/{id}/edit")
     public String editUser(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("roleList", roleService.getAllRoles());
         return "admin/editUser";
     }
 
     //PATCH /admin/user/id - сохранение введенных данных и редирект на страницу с информацией о пользователе
     @PatchMapping("/user/{id}")
-    public String editUser(@PathVariable("id") Long id, @ModelAttribute("user") User user) {
-        userService.updateUser(id, user);
+    public String editUser(@PathVariable("id") Long id, @ModelAttribute("user") @Valid User user,
+                           @RequestParam(value = "rolesIdSelect") Long idRole) {
+        userService.updateUser(id, user, idRole);
         return "redirect:/admin/user/"+id;
     }
 }

@@ -10,6 +10,7 @@
 <div>Name: <span th:text="${user.firstName}"></span></div>
 <div>Lastname: <span th:text="${user.lastName}"></span></div>
 <div>Age: <span th:text="${user.age}"></span></div>
+<div>Role: <span th:text="${user.roles}"></span></div>
 <br><br>
 <a th:href="@{/admin/user/{id}/edit(id=${user.getId()})}">Edit</a>
 <br><br>

@@ -52,8 +52,11 @@ public class UserServiceImp implements UserService {
 
     @Transactional
     @Override
-    public void updateUser(Long id, User user) {
+    public void updateUser(Long id, User user, Long idRole) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(roleService.getRoleById(idRole));
+        user.setRoles(roleSet);
         userDao.updateUser(id, user);
     }
 

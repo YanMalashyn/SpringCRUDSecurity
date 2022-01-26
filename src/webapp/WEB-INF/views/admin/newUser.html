@@ -7,31 +7,28 @@
 <body>
 <form th:method="POST" th:action="@{/admin/user/add}" th:object="${newUser}">
     <label for="username">username: </label>
-    <input type="text" th:field="*{username}" id="username" required/><br>
+    <input type="text" th:field="*{username}" id="username" th:required="true"/><br>
 
     <label for="password">password: </label>
-    <input type="text" th:field="*{password}" id="password" required/><br>
+    <input type=password th:field="*{password}" id="password" th:required="true"/><br>
 
     <label for="name">Name: </label>
-    <input type="text" th:field="*{firstName}" id="name" required/><br>
+    <input type="text" th:field="*{firstName}" id="name" th:required="true"/><br>
 
     <label for="surname">LastName: </label>
-    <input type="text" th:field="*{lastName}" id="surname" required/><br>
+    <input type="text" th:field="*{lastName}" id="surname" th:required="true"/><br>
 
     <label for="age">Age: </label>
     <input type="text" th:field="*{age}" id="age" required/><br>
 
-    <label>
-        <select th:multiple th:size="2" th:name="rolesIdSelect" th:required="true">
-            <option value=""> - Select role -</option>
-            <option
-                    th:each="role : ${roleList}"
-                    th:value="${role.id}"
-                    th:text="${role.name}"
-                    th:selected="${#lists.contains(roleList, role)}">
-            </option>
-        </select>
+    <label>Roles:
+        <input type="checkbox" name="rolesIdSelect"
+               th:each="role : ${roleList}"
+               th:value="${role.id}"
+               th:text="${role.name}"
+        />
     </label>
+
 
     <br><br>
     <input type="submit" value="Create"/>
